@@ -185,6 +185,8 @@ public:
 		unsigned short intensity = 0;
 		float intensity_scale = 65535/0.012;
 		float intensity_min = 0.01;
+		float intensity_float;
+		float intensity_double;
 
 		if(format == PLY_FILE_FORMAT_ASCII){
 			string line;
@@ -255,12 +257,16 @@ public:
 				}else if(prop.name == "z" && prop.type.name == plyPropertyTypes["double"].name){
 					memcpy(&z, (buffer+offset), prop.type.size);
 				}
-				/*
+				
 				else if (prop.name == "intensity" && prop.type.name == plyPropertyTypes["float"].name){
 					memcpy(&intensity_float, (buffer+offset), prop.type.size);
 					intensity = intensity_float;
+					intensity = (unsigned short)(intensity_scale * (intensity_float - intensity_min));
+					//std::cout << intensity << "float\n";
+
 				}
-				else if (prop.name == "intensity" && prop.type.name == plyPropertyTypes["double"].name){
+				/*else if (prop.name == "intensity" && prop.type.name == plyPropertyTypes["double"].name){
+					std::cout << "bin double\n";
 					memcpy(&intensity_double, (buffer+offset), prop.type.size);
 					intensity = intensity_double;
 				}*/
